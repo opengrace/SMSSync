@@ -625,4 +625,8 @@
     <string name="apply_filters_to_all">Apply the same filters to all integrations</string>
     <string name="keywords">Keywords</string>
     <string name="phone_numbers">Phone numbers</string>
+    <string name="add_keyword">Add Keyword</string>
+    <string name="add_phone_numbers">Add Phone numbers</string>
+    <string name="black_list_description">Don\'t publish messages from these numbers</string>
+    <string name="white_list_description">Publish messages from only these numbers</string>
 </resources>

@@ -57,9 +57,8 @@
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_marginLeft="73dp"
-                          android:visibility="gone"
                           android:orientation="vertical">
-                <include layout="@layout/include_filters_layout"/>
+                <include layout="@layout/keywords"/>
             </LinearLayout>
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -85,9 +84,8 @@
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_marginLeft="73dp"
-                          android:visibility="gone"
                           android:orientation="vertical">
-                <include layout="@layout/include_filters_layout"/>
+                <include layout="@layout/keywords"/>
             </LinearLayout>
         </LinearLayout>
         <View
