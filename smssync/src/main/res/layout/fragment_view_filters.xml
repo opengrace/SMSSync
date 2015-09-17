@@ -18,7 +18,6 @@
 
 <android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
@@ -73,52 +72,5 @@
                     android:text="@string/add_keyword"
                     style="?attr/buttonBarButtonStyle"/>
         </LinearLayout>
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/view_spacing_large"
-                android:layout_marginBottom="@dimen/view_spacing_large"
-                android:background="@android:color/darker_gray"/>
-        <android.support.v7.widget.AppCompatTextView android:layout_width="match_parent"
-                                                     android:layout_height="wrap_content"
-                                                     android:padding="@dimen/view_spacing_large"
-                                                     android:text="@string/phone_numbers"/>
-        <android.support.v7.widget.SwitchCompat android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_centerVertical="true"
-                                                android:layout_alignParentRight="true"
-                                                android:text="@string/white_list_description"
-                                                android:padding="@dimen/view_spacing_large"
-                                                app:switchPadding="@dimen/view_spacing_xlarge"/>
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical"
-                      android:id="@+id/filter_white_list_container"/>
-        <Button
-                android:id="@+id/add_white_list_numbers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_phone_numbers"
-                android:padding="@dimen/view_spacing_large"
-                style="?attr/buttonBarButtonStyle"/>
-        <android.support.v7.widget.SwitchCompat android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_centerVertical="true"
-                                                android:layout_alignParentRight="true"
-                                                android:padding="@dimen/view_spacing_xlarge"
-                                                app:switchPadding="@dimen/view_spacing_large"
-                                                android:text="@string/black_list_description"/>
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical"
-                      android:id="@+id/filter_black_list_container"/>
-        <Button
-                android:id="@+id/add_black_list_numbers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_phone_numbers"
-                android:padding="@dimen/view_spacing_large"
-                style="?attr/buttonBarButtonStyle"/>
-
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

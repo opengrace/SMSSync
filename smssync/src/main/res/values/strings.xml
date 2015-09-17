@@ -629,4 +629,6 @@
     <string name="add_phone_numbers">Add Phone numbers</string>
     <string name="black_list_description">Don\'t publish messages from these numbers</string>
     <string name="white_list_description">Publish messages from only these numbers</string>
+    <string name="phone_filter_description">Publish messages based on configured phone numbers
+    </string>
 </resources>
