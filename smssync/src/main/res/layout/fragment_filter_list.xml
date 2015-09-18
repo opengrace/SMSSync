@@ -58,7 +58,7 @@
                           android:layout_height="wrap_content"
                           android:layout_marginLeft="73dp"
                           android:orientation="vertical">
-                <include layout="@layout/keywords"/>
+                <include layout="@layout/filter_keywords"/>
             </LinearLayout>
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                           android:layout_height="wrap_content"
                           android:layout_marginLeft="73dp"
                           android:orientation="vertical">
-                <include layout="@layout/keywords"/>
+                <include layout="@layout/filter_keywords"/>
             </LinearLayout>
         </LinearLayout>
         <View
