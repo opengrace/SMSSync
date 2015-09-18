@@ -18,20 +18,18 @@
 package org.addhen.smssync.presentation.view.ui.fragment;
 
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
-import com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView;
 
 import org.addhen.smssync.R;
 import org.addhen.smssync.presentation.di.component.FilterComponent;
 import org.addhen.smssync.presentation.model.FilterModel;
 import org.addhen.smssync.presentation.presenter.ListFilterPresenter;
+import org.addhen.smssync.presentation.view.filters.ListFilterView;
 import org.addhen.smssync.presentation.view.ui.activity.MainActivity;
 import org.addhen.smssync.presentation.view.ui.adapter.FilterAdapter;
-import org.addhen.smssync.presentation.view.filters.ListFilterView;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -54,13 +52,11 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
     @Inject
     ListFilterPresenter mListFilterPresenter;
 
-    @Bind(android.R.id.empty)
-    TextView mEmptyView;
-
-    @Bind(android.R.id.list)
-    BloatedRecyclerView mFilterRecyclerView;
 
     FilterAdapter mFilterAdapter;
+
+    @Bind(R.id.keyword_filters_container)
+    ViewGroup mTwitterFilterViewGroup;
 
     public FilterFragment() {
         super(FilterAdapter.class, R.layout.fragment_filter_list, 0);
@@ -91,13 +87,6 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
             status = (FilterModel.Status) savedInstanceState
                     .getSerializable(BUNDLE_STATE_FILTER_STATUS);
         }
-        mFilterAdapter = new FilterAdapter(mEmptyView);
-        mFilterRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mFilterRecyclerView.setFocusable(true);
-        mFilterRecyclerView.setFocusableInTouchMode(true);
-        mFilterAdapter.setHasStableIds(true);
-        mFilterRecyclerView.setAdapter(mFilterAdapter);
-        mFilterRecyclerView.addItemDividerDecoration(getActivity());
         mListFilterPresenter.loadFilters(status);
     }
 
