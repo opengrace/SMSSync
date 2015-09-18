@@ -32,4 +32,14 @@
         <attr name="tagDrawablePadding" format="dimension"/>
         <attr name="tagUppercase" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="FilterKeywords">
+        <attr name="keywordTextColor" format="color"/>
+        <attr name="keywordTextSize" format="dimension"/>
+        <attr name="keywordText" format="string" localization="suggested"/>
+        <attr name="keywordIcon" format="reference"/>
+        <attr name="keywordDrawablePadding" format="dimension"/>
+        <attr name="keywordCounterTextColor" format="color"/>
+        <attr name="keywordCounterTextSize" format="dimension"/>
+        <attr name="keywordCounterDrawablePadding" format="dimension"/>
+    </declare-styleable>
 </resources>
