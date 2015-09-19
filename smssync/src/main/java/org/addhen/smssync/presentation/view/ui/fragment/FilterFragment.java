@@ -20,16 +20,26 @@ package org.addhen.smssync.presentation.view.ui.fragment;
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
 
 import org.addhen.smssync.R;
+import org.addhen.smssync.data.twitter.TwitterClient;
 import org.addhen.smssync.presentation.di.component.FilterComponent;
 import org.addhen.smssync.presentation.model.FilterModel;
+import org.addhen.smssync.presentation.model.WebServiceModel;
 import org.addhen.smssync.presentation.presenter.ListFilterPresenter;
+import org.addhen.smssync.presentation.util.Utility;
 import org.addhen.smssync.presentation.view.filters.ListFilterView;
 import org.addhen.smssync.presentation.view.ui.activity.MainActivity;
 import org.addhen.smssync.presentation.view.ui.adapter.FilterAdapter;
+import org.addhen.smssync.presentation.view.ui.widget.CustomFilterKeywords;
+import org.addhen.smssync.presentation.view.ui.widget.FilterKeywords;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.ViewGroup;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.SwitchCompat;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -52,11 +62,13 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
     @Inject
     ListFilterPresenter mListFilterPresenter;
 
+    @Inject
+    TwitterClient mTwitterClient;
 
-    FilterAdapter mFilterAdapter;
+    private FilterAdapter mFilterAdapter;
 
     @Bind(R.id.keyword_filters_container)
-    ViewGroup mTwitterFilterViewGroup;
+    LinearLayout mFilterViewGroup;
 
     public FilterFragment() {
         super(FilterAdapter.class, R.layout.fragment_filter_list, 0);
@@ -89,6 +101,7 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
         }
         mListFilterPresenter.loadFilters(status);
     }
+
 
     @Override
     public void showFilters(List<FilterModel> filterModelList) {
@@ -127,5 +140,68 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
 
     protected <C> C getFilterComponent(Class<C> componentType) {
         return componentType.cast(((MainActivity) getActivity()).getFilterComponent());
+    }
+
+    private void initTwitterView() {
+        if ((mTwitterClient != null) && (mTwitterClient.getSessionManager().getActiveSession()
+                != null)) {
+            CustomFilterKeywords twitterFilterKeyWords = new CustomFilterKeywords(getAppContext());
+            final FilterKeywords filterKeywords = twitterFilterKeyWords.getFilterKeywords();
+            filterKeywords.getFilterKeyword().setText(R.string.keywords);
+
+            final SwitchCompat twitterSwitch = twitterFilterKeyWords.getSwitchCompat();
+            twitterSwitch.setOnClickListener(v -> {
+                if (twitterSwitch.isChecked()) {
+                    filterKeywords.setVisibility(View.GONE);
+                } else {
+                    filterKeywords.setVisibility(View.VISIBLE);
+                }
+            });
+
+            final TextView title = twitterFilterKeyWords.getTitle();
+            title.setText(R.string.twitter);
+
+            final Drawable twitterDrawable = ContextCompat.getDrawable(getContext(),
+                    R.drawable.ic_twitter_blue_24dp);
+            title.setCompoundDrawablesWithIntrinsicBounds(twitterDrawable, null, null, null);
+
+            mFilterViewGroup.addView(twitterFilterKeyWords);
+        }
+    }
+
+    private void initCustomIntegrations(List<WebServiceModel> webServiceModels) {
+        if (!Utility.isEmpty(webServiceModels)) {
+            for (WebServiceModel webServiceModel : webServiceModels) {
+                initCustomWebServiceView(webServiceModel);
+            }
+        }
+    }
+
+    private void initCustomWebServiceView(WebServiceModel webServiceModel) {
+        CustomFilterKeywords customWebServiceFilterKeyWords = new CustomFilterKeywords(
+                getAppContext());
+        final FilterKeywords filterKeywords = customWebServiceFilterKeyWords.getFilterKeywords();
+        filterKeywords.getFilterKeyword().setText(R.string.keywords);
+        filterKeywords.getFilterKeywordCount().setText(0);
+        filterKeywords.setOnClickListener(v -> {
+            // TODO: Launch activity for managing filters
+        });
+
+        final SwitchCompat customWebServiceSwitch = customWebServiceFilterKeyWords
+                .getSwitchCompat();
+        customWebServiceSwitch.setOnClickListener(v -> {
+            if (customWebServiceSwitch.isChecked()) {
+                filterKeywords.setVisibility(View.GONE);
+            } else {
+                filterKeywords.setVisibility(View.VISIBLE);
+            }
+        });
+
+        final TextView title = customWebServiceFilterKeyWords.getTitle();
+        title.setText(webServiceModel.getTitle());
+        final Drawable customWebServiceDrawable = ContextCompat.getDrawable(getContext(),
+                R.drawable.ic_web_grey_900_24dp);
+        title.setCompoundDrawablesWithIntrinsicBounds(customWebServiceDrawable, null, null, null);
+        mFilterViewGroup.addView(customWebServiceFilterKeyWords);
     }
 }

@@ -17,6 +17,7 @@
   -->
 <android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout android:layout_width="match_parent"
@@ -27,7 +28,48 @@
                                                      android:padding="@dimen/view_spacing_large"
                                                      android:text="@string/filter_prompt"/>
         <LinearLayout
-                android:id="@+id/keyword_filters_container"
+                android:id="@+id/integration_twitter_filter_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingRight="@dimen/view_spacing_large"
+                            android:paddingLeft="@dimen/view_spacing_large">
+                <TextView android:id="@+id/integration_twitter"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/twitter"
+                          android:gravity="center"
+                          android:drawablePadding="@dimen/view_spacing_large"
+                          android:textColor="@android:color/black"
+                          android:drawableStart="@drawable/ic_twitter_blue_36dp"
+                          android:drawableLeft="@drawable/ic_twitter_blue_36dp"/>
+                <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/integration_twitter_filter_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/twitter"
+                        android:textColor="@android:color/black"
+                        android:layout_gravity="right"
+                        android:drawableStart="@drawable/ic_twitter_blue_36dp"
+                        android:drawableLeft="@drawable/ic_twitter_blue_36dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+            <org.addhen.smssync.presentation.view.ui.widget.FilterKeywords
+                    android:id="@+id/integration_twitter_keyword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="73dp"
+                    app:keywordIcon="@drawable/ic_format_color_text_grey_900_24dp"
+                    app:keywordText="@string/keywords"
+                    android:orientation="vertical"/>
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/custom_integration_filter_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
