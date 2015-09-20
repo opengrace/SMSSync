@@ -157,7 +157,7 @@ public class FilterFragment extends BaseFragment implements
     private void initTwitterView() {
         if ((mTwitterClient != null) && (mTwitterClient.getSessionManager().getActiveSession()
                 != null)) {
-            //// TODO: Move this into a reusable function
+            //// TODO: Look into moving this into a reusable method
             FilterKeywordsView filterKeywordsView = new FilterKeywordsView(
                     getAppContext());
 
@@ -181,13 +181,13 @@ public class FilterFragment extends BaseFragment implements
                     .getFilterKeywordCount();
             filterKeywordCount.setText(0);
             filterKeywordCount.setOnClickListener(v -> {
-                // TODO: Launch activity for managing filters
+                mLauncher.launchAddKeyword();
             });
 
             AppCompatTextView filterKeyword = filterKeywordsView.getFilterKeyword();
             filterKeyword.setText(R.string.keywords);
             filterKeyword.setOnClickListener(v -> {
-                // TODO: Launch activity for managing filters
+                mLauncher.launchAddKeyword();
             });
 
             mFilterViewGroup.addView(filterKeywordsView);
@@ -269,13 +269,13 @@ public class FilterFragment extends BaseFragment implements
                 .getFilterKeywordCount();
         filterKeywordCount.setText(counter);
         filterKeywordCount.setOnClickListener(v -> {
-            // TODO: Launch activity for managing filters
+            mLauncher.launchAddKeyword();
         });
 
         AppCompatTextView filterKeyword = filterKeywordsView.getFilterKeyword();
         filterKeyword.setText(R.string.keywords);
         filterKeyword.setOnClickListener(v -> {
-            // TODO: Launch activity for managing filters
+            mLauncher.launchAddKeyword();
         });
         mFilterViewGroup.addView(filterKeywordsView);
     }
