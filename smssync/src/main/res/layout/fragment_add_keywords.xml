@@ -30,43 +30,41 @@
                 android:paddingRight="@dimen/view_spacing_large"
                 android:paddingTop="@dimen/view_spacing_large"
                 android:paddingBottom="@dimen/view_spacing_xlarge"
-                android:text="@string/phone_filter_description"/>
+                android:text="@string/filter_prompt"/>
         <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/view_spacing_large"
-                android:text="@string/blacklist"/>
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical"
-                      android:id="@+id/filter_white_list_container"/>
-        <android.support.v7.widget.AppCompatButton
-                android:id="@+id/add_white_list_numbers_btn"
+                android:id="@+id/filter_keyword_integration_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_phone_numbers"
                 android:padding="@dimen/view_spacing_large"
-                style="?attr/buttonBarButtonStyle"/>
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:text="Custom Web Service"
+                android:layout_marginBottom="@dimen/view_spacing_xlarge"
+                android:drawablePadding="@dimen/view_spacing_xlarge"
+                android:drawableStart="@drawable/ic_web_grey_900_24dp"
+                android:drawableLeft="@drawable/ic_web_grey_900_24dp"/>
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray"
                 android:id="@+id/view"/>
+
         <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/view_spacing_xlarge"
                 android:padding="@dimen/view_spacing_large"
-                android:text="@string/whitelist"/>
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/filter_black_list_container"/>
+                android:text="@string/keywords"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:id="@+id/keywords_list_container"/>
         <android.support.v7.widget.AppCompatButton
-                android:id="@+id/add_black_list_numbers_btn"
+                android:id="@+id/add_keyword_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_phone_numbers"
+                android:text="@string/add_keyword"
                 android:padding="@dimen/view_spacing_large"
                 style="?attr/buttonBarButtonStyle"/>
     </LinearLayout>
