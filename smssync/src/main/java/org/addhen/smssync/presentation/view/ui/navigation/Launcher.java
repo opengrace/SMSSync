@@ -17,8 +17,8 @@
 
 package org.addhen.smssync.presentation.view.ui.navigation;
 
-import org.addhen.smssync.presentation.model.FilterModel;
 import org.addhen.smssync.presentation.model.WebServiceModel;
+import org.addhen.smssync.presentation.view.ui.activity.AddPhoneNumberActivity;
 import org.addhen.smssync.presentation.view.ui.activity.AddWebServiceActivity;
 import org.addhen.smssync.presentation.view.ui.activity.GettingStartedActivity;
 import org.addhen.smssync.presentation.view.ui.activity.IntegrationActivity;
@@ -67,7 +67,7 @@ public class Launcher {
     }
 
     public FilterFragment launchFilters() {
-        return FilterFragment.newInstance(FilterModel.Status.WHITELIST);
+        return FilterFragment.newInstance();
     }
 
     public PublishedMessageFragment launchPublishedMessages() {
@@ -103,5 +103,9 @@ public class Launcher {
      */
     public void launchTwitterProfile() {
         mActivity.startActivity(TwitterProfileActivity.getIntent(mActivity));
+    }
+
+    public void launchAddPhoneNumber() {
+        mActivity.startActivity(AddPhoneNumberActivity.getIntent(mActivity));
     }
 }

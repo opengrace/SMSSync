@@ -28,6 +28,7 @@ import org.addhen.smssync.presentation.presenter.ListFilterPresenter;
 import org.addhen.smssync.presentation.util.Utility;
 import org.addhen.smssync.presentation.view.filters.ListFilterView;
 import org.addhen.smssync.presentation.view.ui.activity.MainActivity;
+import org.addhen.smssync.presentation.view.ui.navigation.Launcher;
 import org.addhen.smssync.presentation.view.ui.widget.FilterKeywordsView;
 
 import android.content.Context;
@@ -51,14 +52,11 @@ import butterknife.Bind;
 public class FilterFragment extends BaseFragment implements
         ListFilterView {
 
-    private static final String ARGUMENT_KEY_FILTER_STATUS
-            = "org.addhen.smssync.presentation.view.ui.fragment.ARGUMENT_FILTER_STATUS";
-
-    private static final String BUNDLE_STATE_FILTER_STATUS
-            = "org.addhen.smssync.presentation.view.ui.fragment.BUNDLE_STATE_FILTER_STATUS";
-
     @Inject
     ListFilterPresenter mListFilterPresenter;
+
+    @Inject
+    Launcher mLauncher;
 
     @Inject
     TwitterClient mTwitterClient;
@@ -72,16 +70,17 @@ public class FilterFragment extends BaseFragment implements
     @Bind(R.id.white_list)
     FilterKeywordsView mWhiteListFilterKeywordsView;
 
+    private static FilterFragment mFilterFragment;
+
     public FilterFragment() {
         super(R.layout.fragment_filter_list, 0);
     }
 
-    public static FilterFragment newInstance(FilterModel.Status status) {
-        FilterFragment filterFragment = new FilterFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ARGUMENT_KEY_FILTER_STATUS, status);
-        filterFragment.setArguments(bundle);
-        return filterFragment;
+    public static FilterFragment newInstance() {
+        if (mFilterFragment == null) {
+            mFilterFragment = new FilterFragment();
+        }
+        return mFilterFragment;
     }
 
     @Override
@@ -111,14 +110,6 @@ public class FilterFragment extends BaseFragment implements
     private void initialize(Bundle savedInstanceState) {
         getFilterComponent(FilterComponent.class).inject(this);
         mListFilterPresenter.setView(this);
-        final FilterModel.Status status;
-        if (savedInstanceState == null) {
-            status = (FilterModel.Status) getArguments().getSerializable(
-                    ARGUMENT_KEY_FILTER_STATUS);
-        } else {
-            status = (FilterModel.Status) savedInstanceState
-                    .getSerializable(BUNDLE_STATE_FILTER_STATUS);
-        }
     }
 
 
@@ -242,13 +233,13 @@ public class FilterFragment extends BaseFragment implements
         AppCompatTextView filterKeywordCount = mWhiteListFilterKeywordsView.getFilterKeywordCount();
         filterKeywordCount.setText(count);
         filterKeywordCount.setOnClickListener(v -> {
-            // TODO: Launch activity for managing filters
+            mLauncher.launchAddPhoneNumber();
         });
 
         AppCompatTextView filterKeyword = mWhiteListFilterKeywordsView.getFilterKeyword();
         filterKeyword.setText(R.string.keywords);
         filterKeyword.setOnClickListener(v -> {
-            // TODO: Launch activity for managing filters
+            mLauncher.launchAddPhoneNumber();
         });
 
         mWhiteListFilterKeywordsView.getFilterKeywordCount().setText(count);
