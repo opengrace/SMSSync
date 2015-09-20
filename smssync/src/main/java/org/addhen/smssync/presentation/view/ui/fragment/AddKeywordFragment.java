@@ -21,7 +21,15 @@ import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 
 import org.addhen.smssync.R;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -57,5 +65,32 @@ public class AddKeywordFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    @OnClick(R.id.add_keyword_btn)
+    void onAddKeywordClicked() {
+        showDialog();
+    }
+
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_add_keyword, null);
+        EditText keywordEditText = ButterKnife.findById(view, R.id.add_keyword_text);
+        builder.setView(view).setPositiveButton(R.string.add,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        showSnabackar(getView(), keywordEditText.getText().toString());
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.create().show();
+
     }
 }

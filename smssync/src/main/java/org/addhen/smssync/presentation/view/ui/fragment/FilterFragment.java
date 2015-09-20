@@ -202,7 +202,7 @@ public class FilterFragment extends BaseFragment implements
         });
 
         mBlackListFilterKeywordsView.setFilterItemListener(v -> {
-            mLauncher.launchAddKeyword();
+            mLauncher.launchAddPhoneNumber();
         });
 
         AppCompatTextView filterKeywordCount = mBlackListFilterKeywordsView.getFilterKeywordCount();
