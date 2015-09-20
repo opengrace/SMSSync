@@ -60,6 +60,9 @@ public class AddKeywordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mAddKeywordFragment = (AddKeywordFragment) getSupportFragmentManager().findFragmentByTag(
                 FRAG_TAG);
-        replaceFragment(R.id.add_phone_fragment_container, mAddKeywordFragment, FRAG_TAG);
+        if (mAddKeywordFragment == null) {
+            mAddKeywordFragment = AddKeywordFragment.newInstance();
+            replaceFragment(R.id.add_keyword_fragment_container, mAddKeywordFragment, FRAG_TAG);
+        }
     }
 }

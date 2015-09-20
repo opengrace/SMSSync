@@ -39,7 +39,7 @@ import android.widget.LinearLayout;
  */
 public class FilterKeywordsView extends LinearLayout {
 
-    private static final int DEFAULT_TEXT_SIZE = 16;
+    private static final int DEFAULT_TEXT_SIZE = 15;
 
     private AppCompatTextView mTitleTextView;
 
@@ -73,6 +73,8 @@ public class FilterKeywordsView extends LinearLayout {
 
     private SwitchListener mSwitchListener;
 
+    private FilterItemListener mFilterItemListener;
+
     public FilterKeywordsView(Context context) {
         super(context);
         initView();
@@ -91,8 +93,8 @@ public class FilterKeywordsView extends LinearLayout {
         View rootView = inflater.inflate(R.layout.filter_keywords_view, this);
         mTitleTextView = (AppCompatTextView) rootView.findViewById(R.id.custom_web_service_filter);
         mKeywordsContainer = (ViewGroup) rootView.findViewById(R.id.filter_keywords_container);
-        mSwitchCompat = (SwitchCompat) rootView
-                .findViewById(R.id.custom_filter_keyword_custom_switch);
+        mSwitchCompat = (SwitchCompat) rootView.findViewById(
+                R.id.custom_filter_keyword_custom_switch);
         mFilterKeyword = (AppCompatTextView) rootView.findViewById(R.id.filter_keyword);
         mFilterKeywordCount = (AppCompatTextView) rootView.findViewById(R.id.filter_keyword_count);
         mTitleTextView.setText(mTitle);
@@ -109,6 +111,11 @@ public class FilterKeywordsView extends LinearLayout {
             toggleFilters();
             if (mSwitchListener != null) {
                 mSwitchListener.onSwitchClicked(v);
+            }
+        });
+        mKeywordsContainer.setOnClickListener(v -> {
+            if (mFilterItemListener != null) {
+                mFilterItemListener.onFilterItemClicked(v);
             }
         });
         setOrientation(VERTICAL);
@@ -153,11 +160,15 @@ public class FilterKeywordsView extends LinearLayout {
         mSwitchListener = switchListener;
     }
 
-    private void toggleFilters() {
+    public void setFilterItemListener(FilterItemListener filterItemListener) {
+        mFilterItemListener = filterItemListener;
+    }
+
+    public void toggleFilters() {
         if (mKeywordsContainer.getVisibility() == View.VISIBLE) {
             Animation out = AnimationUtils.makeOutAnimation(getContext(), true);
             mKeywordsContainer.startAnimation(out);
-            mKeywordsContainer.setVisibility(View.INVISIBLE);
+            mKeywordsContainer.setVisibility(View.GONE);
         } else {
             Animation in = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
             mKeywordsContainer.startAnimation(in);
@@ -188,5 +199,10 @@ public class FilterKeywordsView extends LinearLayout {
     public interface SwitchListener {
 
         void onSwitchClicked(View view);
+    }
+
+    public interface FilterItemListener {
+
+        void onFilterItemClicked(View view);
     }
 }

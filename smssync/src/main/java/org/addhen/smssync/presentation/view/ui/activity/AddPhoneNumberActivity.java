@@ -61,6 +61,10 @@ public class AddPhoneNumberActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mAddPhoneNumberFilterFragment = (AddPhoneNumberFilterFragment) getSupportFragmentManager()
                 .findFragmentByTag(FRAG_TAG);
-        replaceFragment(R.id.add_phone_fragment_container, mAddPhoneNumberFilterFragment, FRAG_TAG);
+        if (mAddPhoneNumberFilterFragment == null) {
+            mAddPhoneNumberFilterFragment = AddPhoneNumberFilterFragment.newInstance();
+            replaceFragment(R.id.add_phone_fragment_container, mAddPhoneNumberFilterFragment,
+                    FRAG_TAG);
+        }
     }
 }

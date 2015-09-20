@@ -92,6 +92,8 @@ public class FilterFragment extends BaseFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        mFilterViewGroup.removeAllViews();
+        initTwitterView();
         mListFilterPresenter.resume();
     }
 
@@ -126,8 +128,8 @@ public class FilterFragment extends BaseFragment implements
                 }
             }
         }
-        initBlackListFilters(blackListCount);
-        initWhiteListFilters(whiteListCount);
+        initBlackListFilters(String.valueOf(blackListCount));
+        initWhiteListFilters(String.valueOf(whiteListCount));
     }
 
     @Override
@@ -135,7 +137,7 @@ public class FilterFragment extends BaseFragment implements
         if (!Utility.isEmpty(webServiceModels)) {
             for (WebServiceModel webServiceModel : webServiceModels) {
                 initCustomIntegrationFilters(webServiceModel.getTitle(),
-                        R.drawable.ic_web_grey_900_24dp, 0);
+                        R.drawable.ic_web_grey_900_24dp, String.valueOf(webServiceModels.size()));
             }
         }
     }
@@ -159,7 +161,7 @@ public class FilterFragment extends BaseFragment implements
                 != null)) {
             //// TODO: Look into moving this into a reusable method
             FilterKeywordsView filterKeywordsView = new FilterKeywordsView(
-                    getAppContext());
+                    getContext());
 
             final SwitchCompat filterKeywordsSwitch = filterKeywordsView
                     .getSwitchCompat();
@@ -171,6 +173,10 @@ public class FilterFragment extends BaseFragment implements
                 }
             });
 
+            filterKeywordsView.setFilterItemListener(v -> {
+                mLauncher.launchAddKeyword();
+            });
+
             final AppCompatTextView title = filterKeywordsView.getTitle();
             title.setText(R.string.twitter);
             final Drawable customWebServiceDrawable = ContextCompat.getDrawable(getContext(),
@@ -179,22 +185,12 @@ public class FilterFragment extends BaseFragment implements
                     null);
             AppCompatTextView filterKeywordCount = filterKeywordsView
                     .getFilterKeywordCount();
-            filterKeywordCount.setText(0);
-            filterKeywordCount.setOnClickListener(v -> {
-                mLauncher.launchAddKeyword();
-            });
-
-            AppCompatTextView filterKeyword = filterKeywordsView.getFilterKeyword();
-            filterKeyword.setText(R.string.keywords);
-            filterKeyword.setOnClickListener(v -> {
-                mLauncher.launchAddKeyword();
-            });
-
+            filterKeywordCount.setText("0");
             mFilterViewGroup.addView(filterKeywordsView);
         }
     }
 
-    private void initBlackListFilters(int count) {
+    private void initBlackListFilters(String count) {
         final SwitchCompat filterKeywordsSwitch = mBlackListFilterKeywordsView
                 .getSwitchCompat();
         mBlackListFilterKeywordsView.setSwitchListener(v -> {
@@ -205,21 +201,18 @@ public class FilterFragment extends BaseFragment implements
             }
         });
 
-        AppCompatTextView filterKeywordCount = mBlackListFilterKeywordsView.getFilterKeywordCount();
-        filterKeywordCount.setText(count);
-        filterKeywordCount.setOnClickListener(v -> {
-            // TODO: Launch activity for managing filters
+        mBlackListFilterKeywordsView.setFilterItemListener(v -> {
+            mLauncher.launchAddKeyword();
         });
 
+        AppCompatTextView filterKeywordCount = mBlackListFilterKeywordsView.getFilterKeywordCount();
+        filterKeywordCount.setText(count);
         AppCompatTextView filterKeyword = mBlackListFilterKeywordsView.getFilterKeyword();
-        filterKeyword.setText(R.string.keywords);
-        filterKeyword.setOnClickListener(v -> {
-            // TODO: Launch activity for managing filters
-        });
+        filterKeyword.setText(R.string.phone_numbers);
         mBlackListFilterKeywordsView.getFilterKeywordCount().setText(count);
     }
 
-    private void initWhiteListFilters(int count) {
+    private void initWhiteListFilters(String count) {
         final SwitchCompat filterKeywordsSwitch = mWhiteListFilterKeywordsView
                 .getSwitchCompat();
         mWhiteListFilterKeywordsView.setSwitchListener(v -> {
@@ -229,29 +222,21 @@ public class FilterFragment extends BaseFragment implements
                 // TODO: Disable filter
             }
         });
-
+        mWhiteListFilterKeywordsView.setFilterItemListener(v -> {
+            mLauncher.launchAddPhoneNumber();
+        });
         AppCompatTextView filterKeywordCount = mWhiteListFilterKeywordsView.getFilterKeywordCount();
         filterKeywordCount.setText(count);
-        filterKeywordCount.setOnClickListener(v -> {
-            mLauncher.launchAddPhoneNumber();
-        });
 
         AppCompatTextView filterKeyword = mWhiteListFilterKeywordsView.getFilterKeyword();
-        filterKeyword.setText(R.string.keywords);
-        filterKeyword.setOnClickListener(v -> {
-            mLauncher.launchAddPhoneNumber();
-        });
-
+        filterKeyword.setText(R.string.phone_numbers);
         mWhiteListFilterKeywordsView.getFilterKeywordCount().setText(count);
     }
 
     private void initCustomIntegrationFilters(String integrationTitle,
-            @DrawableRes int integrationDrawableResId, int counter) {
-        FilterKeywordsView filterKeywordsView = new FilterKeywordsView(
-                getAppContext());
-
-        final SwitchCompat filterKeywordsSwitch = filterKeywordsView
-                .getSwitchCompat();
+            @DrawableRes int integrationDrawableResId, String count) {
+        FilterKeywordsView filterKeywordsView = new FilterKeywordsView(getContext());
+        final SwitchCompat filterKeywordsSwitch = filterKeywordsView.getSwitchCompat();
         filterKeywordsView.setSwitchListener(v -> {
             if (filterKeywordsSwitch.isChecked()) {
                 // TODO: Enable filter 
@@ -260,23 +245,19 @@ public class FilterFragment extends BaseFragment implements
             }
         });
 
-        final AppCompatTextView title = filterKeywordsView.getTitle();
-        title.setText(integrationTitle);
-        final Drawable customWebServiceDrawable = ContextCompat.getDrawable(
-                getContext(), integrationDrawableResId);
-        title.setCompoundDrawablesWithIntrinsicBounds(customWebServiceDrawable, null, null, null);
-        AppCompatTextView filterKeywordCount = filterKeywordsView
-                .getFilterKeywordCount();
-        filterKeywordCount.setText(counter);
-        filterKeywordCount.setOnClickListener(v -> {
+        filterKeywordsView.setFilterItemListener(v -> {
             mLauncher.launchAddKeyword();
         });
 
+        final AppCompatTextView title = filterKeywordsView.getTitle();
+        title.setText(integrationTitle);
+        final Drawable customWebServiceDrawable = ContextCompat.getDrawable(getContext(),
+                integrationDrawableResId);
+        title.setCompoundDrawablesWithIntrinsicBounds(customWebServiceDrawable, null, null, null);
         AppCompatTextView filterKeyword = filterKeywordsView.getFilterKeyword();
         filterKeyword.setText(R.string.keywords);
-        filterKeyword.setOnClickListener(v -> {
-            mLauncher.launchAddKeyword();
-        });
+        AppCompatTextView filterKeywordCount = filterKeywordsView.getFilterKeywordCount();
+        filterKeywordCount.setText(count);
         mFilterViewGroup.addView(filterKeywordsView);
     }
 }

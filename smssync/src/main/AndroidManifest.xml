@@ -130,7 +130,7 @@
         </activity>
         <activity
                 android:name=".presentation.view.ui.activity.AddKeywordActivity"
-                android:label="@string/add_phone_numbers"
+                android:label="@string/add_keyword"
                 android:exported="false"
                 android:launchMode="singleTask"
                 android:parentActivityName=".presentation.view.ui.activity.MainActivity">
