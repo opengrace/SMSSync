@@ -126,7 +126,17 @@
                 android:parentActivityName=".presentation.view.ui.activity.MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".presentation.view.ui.activity.IntegrationActivity"/>
+                    android:value=".presentation.view.ui.activity.MainActivity"/>
+        </activity>
+        <activity
+                android:name=".presentation.view.ui.activity.AddKeywordActivity"
+                android:label="@string/add_phone_numbers"
+                android:exported="false"
+                android:launchMode="singleTask"
+                android:parentActivityName=".presentation.view.ui.activity.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".presentation.view.ui.activity.MainActivity"/>
         </activity>
         <activity
                 android:name=".presentation.view.ui.activity.ListWebServiceActivity"

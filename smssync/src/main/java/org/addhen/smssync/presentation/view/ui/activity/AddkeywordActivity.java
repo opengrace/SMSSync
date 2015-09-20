@@ -31,7 +31,7 @@ import android.os.Bundle;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class AddkeywordActivity extends BaseActivity {
+public class AddKeywordActivity extends BaseActivity {
 
     private static final String FRAG_TAG = "add_keyword";
 
@@ -41,7 +41,7 @@ public class AddkeywordActivity extends BaseActivity {
     /**
      * Default constructor
      */
-    public AddkeywordActivity() {
+    public AddKeywordActivity() {
         super(R.layout.activity_add_keyword, 0);
     }
 
@@ -52,7 +52,7 @@ public class AddkeywordActivity extends BaseActivity {
      * @return The intent to be launched
      */
     public static Intent getIntent(final Context context) {
-        return new Intent(context, AddkeywordActivity.class);
+        return new Intent(context, AddKeywordActivity.class);
     }
 
     @Override
