@@ -34,7 +34,7 @@ public class AddPhoneNumberFilterFragment extends BaseFragment {
      * BaseFragment
      */
     public AddPhoneNumberFilterFragment() {
-        super(R.layout.fragment_filter_phone_numbers, 0);
+        super(R.layout.fragment_add_phone_numbers, 0);
     }
 
     public static AddPhoneNumberFilterFragment newInstance() {

@@ -88,7 +88,7 @@ public class FilterKeywordsView extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View rootView = inflater.inflate(R.layout.custom_web_integration_filters, this);
+        View rootView = inflater.inflate(R.layout.filter_keywords_view, this);
         mTitleTextView = (AppCompatTextView) rootView.findViewById(R.id.custom_web_service_filter);
         mKeywordsContainer = (ViewGroup) rootView.findViewById(R.id.filter_keywords_container);
         mSwitchCompat = (SwitchCompat) rootView
