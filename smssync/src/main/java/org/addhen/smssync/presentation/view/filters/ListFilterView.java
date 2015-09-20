@@ -17,16 +17,19 @@
 
 package org.addhen.smssync.presentation.view.filters;
 
-import com.addhen.android.raiburari.presentation.ui.view.LoadDataView;
+import com.addhen.android.raiburari.presentation.ui.view.UiView;
 
 import org.addhen.smssync.presentation.model.FilterModel;
+import org.addhen.smssync.presentation.model.WebServiceModel;
 
 import java.util.List;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public interface ListFilterView extends LoadDataView {
+public interface ListFilterView extends UiView {
 
     void showFilters(List<FilterModel> filterModelList);
+
+    void showCustomWebService(List<WebServiceModel> webServiceModels);
 }

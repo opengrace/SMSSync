@@ -20,10 +20,9 @@ package org.addhen.smssync.presentation.di.module;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 
-import org.addhen.smssync.data.repository.FilterDataRepository;
-import org.addhen.smssync.domain.repository.FilterRepository;
 import org.addhen.smssync.domain.usecase.filter.AddFilterUsecase;
 import org.addhen.smssync.domain.usecase.filter.ListFilterUsecase;
+import org.addhen.smssync.domain.usecase.webservice.GetActiveWebServiceUsecase;
 
 import javax.inject.Named;
 
@@ -39,7 +38,7 @@ public class FilterModule {
     @Provides
     @ActivityScope
     @Named("filterList")
-    ListFilterUsecase provideListFilterUseCase(ListFilterUsecase listFilterUsecase) {
+    Usecase provideListFilterUseCase(ListFilterUsecase listFilterUsecase) {
         return listFilterUsecase;
     }
 
@@ -48,5 +47,13 @@ public class FilterModule {
     @Named("filterAdd")
     Usecase provideAddFilterUseCase(AddFilterUsecase addFilterUsecase) {
         return addFilterUsecase;
+    }
+
+    @Provides
+    @ActivityScope
+    @Named("getActiveWebService")
+    Usecase provideGetActiveWebServiceUseCase(
+            GetActiveWebServiceUsecase getActiveWebServiceUsecase) {
+        return getActiveWebServiceUsecase;
     }
 }

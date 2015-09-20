@@ -17,7 +17,7 @@
 
 package org.addhen.smssync.presentation.view.ui.fragment;
 
-import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
+import com.addhen.android.raiburari.presentation.ui.fragment.BaseFragment;
 
 import org.addhen.smssync.R;
 import org.addhen.smssync.data.twitter.TwitterClient;
@@ -28,7 +28,6 @@ import org.addhen.smssync.presentation.presenter.ListFilterPresenter;
 import org.addhen.smssync.presentation.util.Utility;
 import org.addhen.smssync.presentation.view.filters.ListFilterView;
 import org.addhen.smssync.presentation.view.ui.activity.MainActivity;
-import org.addhen.smssync.presentation.view.ui.adapter.FilterAdapter;
 import org.addhen.smssync.presentation.view.ui.widget.FilterKeywordsView;
 
 import android.content.Context;
@@ -49,7 +48,7 @@ import butterknife.Bind;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, FilterAdapter> implements
+public class FilterFragment extends BaseFragment implements
         ListFilterView {
 
     private static final String ARGUMENT_KEY_FILTER_STATUS
@@ -64,13 +63,17 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
     @Inject
     TwitterClient mTwitterClient;
 
-    private FilterAdapter mFilterAdapter;
-
     @Bind(R.id.custom_integration_filter_container)
     LinearLayout mFilterViewGroup;
 
+    @Bind(R.id.black_list)
+    FilterKeywordsView mBlackListFilterKeywordsView;
+
+    @Bind(R.id.white_list)
+    FilterKeywordsView mWhiteListFilterKeywordsView;
+
     public FilterFragment() {
-        super(FilterAdapter.class, R.layout.fragment_filter_list, 0);
+        super(R.layout.fragment_filter_list, 0);
     }
 
     public static FilterFragment newInstance(FilterModel.Status status) {
@@ -87,6 +90,24 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
         initialize(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mListFilterPresenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mListFilterPresenter.pause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListFilterPresenter.destroy();
+    }
+
     private void initialize(Bundle savedInstanceState) {
         getFilterComponent(FilterComponent.class).inject(this);
         mListFilterPresenter.setView(this);
@@ -98,43 +119,44 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
             status = (FilterModel.Status) savedInstanceState
                     .getSerializable(BUNDLE_STATE_FILTER_STATUS);
         }
-        mListFilterPresenter.loadFilters(status);
     }
 
 
     @Override
     public void showFilters(List<FilterModel> filterModelList) {
-
+        int whiteListCount = 0;
+        int blackListCount = 0;
+        if (!Utility.isEmpty(filterModelList)) {
+            for (FilterModel filterModel : filterModelList) {
+                if (filterModel.status == FilterModel.Status.WHITELIST) {
+                    whiteListCount += 1;
+                } else {
+                    blackListCount += 1;
+                }
+            }
+        }
+        initBlackListFilters(blackListCount);
+        initWhiteListFilters(whiteListCount);
     }
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showRetry() {
-
-    }
-
-    @Override
-    public void hideRetry() {
-
+    public void showCustomWebService(List<WebServiceModel> webServiceModels) {
+        if (!Utility.isEmpty(webServiceModels)) {
+            for (WebServiceModel webServiceModel : webServiceModels) {
+                initCustomIntegrationFilters(webServiceModel.getTitle(),
+                        R.drawable.ic_web_grey_900_24dp, 0);
+            }
+        }
     }
 
     @Override
     public void showError(String s) {
-
+        showSnabackar(getView(), s);
     }
 
     @Override
     public Context getAppContext() {
-        return null;
+        return getContext().getApplicationContext();
     }
 
     protected <C> C getFilterComponent(Class<C> componentType) {
@@ -181,17 +203,59 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
         }
     }
 
-    private void initCustomIntegrations(List<WebServiceModel> webServiceModels) {
-        if (!Utility.isEmpty(webServiceModels)) {
-            for (WebServiceModel webServiceModel : webServiceModels) {
-                initCustomWebServiceView(webServiceModel.getTitle(),
-                        R.drawable.ic_web_grey_900_24dp);
+    private void initBlackListFilters(int count) {
+        final SwitchCompat filterKeywordsSwitch = mBlackListFilterKeywordsView
+                .getSwitchCompat();
+        mBlackListFilterKeywordsView.setSwitchListener(v -> {
+            if (filterKeywordsSwitch.isChecked()) {
+                // TODO: Enable filter
+            } else {
+                // TODO: Disable filter
             }
-        }
+        });
+
+        AppCompatTextView filterKeywordCount = mBlackListFilterKeywordsView.getFilterKeywordCount();
+        filterKeywordCount.setText(count);
+        filterKeywordCount.setOnClickListener(v -> {
+            // TODO: Launch activity for managing filters
+        });
+
+        AppCompatTextView filterKeyword = mBlackListFilterKeywordsView.getFilterKeyword();
+        filterKeyword.setText(R.string.keywords);
+        filterKeyword.setOnClickListener(v -> {
+            // TODO: Launch activity for managing filters
+        });
+        mBlackListFilterKeywordsView.getFilterKeywordCount().setText(count);
     }
 
-    private void initCustomWebServiceView(String integrationTitle,
-            @DrawableRes int integrationDrawableResId) {
+    private void initWhiteListFilters(int count) {
+        final SwitchCompat filterKeywordsSwitch = mWhiteListFilterKeywordsView
+                .getSwitchCompat();
+        mWhiteListFilterKeywordsView.setSwitchListener(v -> {
+            if (filterKeywordsSwitch.isChecked()) {
+                // TODO: Enable filter
+            } else {
+                // TODO: Disable filter
+            }
+        });
+
+        AppCompatTextView filterKeywordCount = mWhiteListFilterKeywordsView.getFilterKeywordCount();
+        filterKeywordCount.setText(count);
+        filterKeywordCount.setOnClickListener(v -> {
+            // TODO: Launch activity for managing filters
+        });
+
+        AppCompatTextView filterKeyword = mWhiteListFilterKeywordsView.getFilterKeyword();
+        filterKeyword.setText(R.string.keywords);
+        filterKeyword.setOnClickListener(v -> {
+            // TODO: Launch activity for managing filters
+        });
+
+        mWhiteListFilterKeywordsView.getFilterKeywordCount().setText(count);
+    }
+
+    private void initCustomIntegrationFilters(String integrationTitle,
+            @DrawableRes int integrationDrawableResId, int counter) {
         FilterKeywordsView filterKeywordsView = new FilterKeywordsView(
                 getAppContext());
 
@@ -212,7 +276,7 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
         title.setCompoundDrawablesWithIntrinsicBounds(customWebServiceDrawable, null, null, null);
         AppCompatTextView filterKeywordCount = filterKeywordsView
                 .getFilterKeywordCount();
-        filterKeywordCount.setText(0);
+        filterKeywordCount.setText(counter);
         filterKeywordCount.setOnClickListener(v -> {
             // TODO: Launch activity for managing filters
         });

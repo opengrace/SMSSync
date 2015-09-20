@@ -20,14 +20,15 @@ package org.addhen.smssync.presentation.presenter;
 import com.addhen.android.raiburari.domain.exception.DefaultErrorHandler;
 import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
+import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 
 import org.addhen.smssync.domain.entity.FilterEntity;
-import org.addhen.smssync.domain.usecase.filter.ListFilterUsecase;
+import org.addhen.smssync.domain.entity.WebServiceEntity;
 import org.addhen.smssync.presentation.exception.ErrorMessageFactory;
-import org.addhen.smssync.presentation.model.FilterModel;
 import org.addhen.smssync.presentation.model.mapper.FilterModelDataMapper;
+import org.addhen.smssync.presentation.model.mapper.WebServiceModelDataMapper;
 import org.addhen.smssync.presentation.view.filters.ListFilterView;
 
 import android.support.annotation.NonNull;
@@ -43,21 +44,31 @@ import javax.inject.Named;
 @ActivityScope
 public class ListFilterPresenter implements Presenter {
 
-    private final ListFilterUsecase mListFiltersUsecase;
+    private final Usecase mListFiltersUsecase;
+
+    private final Usecase mGetActiveWebServiceUsecase;
 
     private final FilterModelDataMapper mFilterModelDataMapper;
+
+    private final WebServiceModelDataMapper mWebServiceModelDataMapper;
 
     private ListFilterView mListFilterView;
 
     @Inject
-    public ListFilterPresenter(@Named("filterList") ListFilterUsecase listUsecase,
-            FilterModelDataMapper filterModelDataMapper) {
+    public ListFilterPresenter(@Named("filterList") Usecase listUsecase,
+            @Named("getActiveWebService") Usecase getActiveWebServiceUsecase,
+            FilterModelDataMapper filterModelDataMapper,
+            WebServiceModelDataMapper webServiceModelDataMapper) {
         mListFiltersUsecase = listUsecase;
+        mGetActiveWebServiceUsecase = getActiveWebServiceUsecase;
+        mWebServiceModelDataMapper = webServiceModelDataMapper;
         mFilterModelDataMapper = filterModelDataMapper;
     }
 
     @Override
     public void resume() {
+        loadActiveWebService();
+        loadFilters();
     }
 
     @Override
@@ -68,33 +79,38 @@ public class ListFilterPresenter implements Presenter {
     @Override
     public void destroy() {
         mListFiltersUsecase.unsubscribe();
+        mGetActiveWebServiceUsecase.unsubscribe();
     }
 
     public void setView(@NonNull ListFilterView listFilterView) {
         mListFilterView = listFilterView;
     }
 
-    public void loadFilters(FilterModel.Status status) {
-        mListFilterView.hideRetry();
-        mListFilterView.showLoading();
-        mListFiltersUsecase.setStatus(mFilterModelDataMapper.map(status));
-        mListFiltersUsecase.execute(new DefaultSubscriber<List<FilterEntity>>() {
+    private void loadActiveWebService() {
+        mGetActiveWebServiceUsecase.execute(new DefaultSubscriber<List<WebServiceEntity>>() {
             @Override
-            public void onCompleted() {
-                mListFilterView.hideLoading();
+            public void onNext(List<WebServiceEntity> webServiceList) {
+                mListFilterView
+                        .showCustomWebService(mWebServiceModelDataMapper.map(webServiceList));
             }
 
             @Override
+            public void onError(Throwable e) {
+                showErrorMessage(new DefaultErrorHandler((Exception) e));
+            }
+        });
+    }
+
+    private void loadFilters() {
+        mListFiltersUsecase.execute(new DefaultSubscriber<List<FilterEntity>>() {
+            @Override
             public void onNext(List<FilterEntity> filterList) {
-                mListFilterView.hideLoading();
                 mListFilterView.showFilters(mFilterModelDataMapper.map(filterList));
             }
 
             @Override
             public void onError(Throwable e) {
-                mListFilterView.hideLoading();
                 showErrorMessage(new DefaultErrorHandler((Exception) e));
-                mListFilterView.showRetry();
             }
         });
     }
