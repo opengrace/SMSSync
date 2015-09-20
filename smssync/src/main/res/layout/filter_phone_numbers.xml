@@ -17,7 +17,6 @@
   -->
 <android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
@@ -27,17 +26,16 @@
         <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/view_spacing_large"
+                android:paddingLeft="@dimen/view_spacing_large"
+                android:paddingRight="@dimen/view_spacing_large"
+                android:paddingTop="@dimen/view_spacing_large"
+                android:paddingBottom="@dimen/view_spacing_xlarge"
                 android:text="@string/phone_filter_description"/>
-        <android.support.v7.widget.SwitchCompat
-                android:id="@+id/filter_white_list_switch"
-                android:layout_width="wrap_content"
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:text="@string/white_list_description"
                 android:padding="@dimen/view_spacing_large"
-                app:switchPadding="@dimen/view_spacing_xlarge"/>
+                android:text="@string/blacklist"/>
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical"
@@ -49,15 +47,16 @@
                 android:text="@string/add_phone_numbers"
                 android:padding="@dimen/view_spacing_large"
                 style="?attr/buttonBarButtonStyle"/>
-        <android.support.v7.widget.SwitchCompat
-                android:id="@+id/filter_black_list_switch"
-                android:layout_width="wrap_content"
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:id="@+id/view"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
                 android:padding="@dimen/view_spacing_large"
-                app:switchPadding="@dimen/view_spacing_xlarge"
-                android:text="@string/black_list_description"/>
+                android:text="@string/whitelist"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

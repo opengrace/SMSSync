@@ -39,6 +39,8 @@ import android.support.v7.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -325,5 +327,10 @@ public class Utility {
         }
 
         return -1;
+    }
+
+    public static int dipToPixels(Context context, float dipValue) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 }

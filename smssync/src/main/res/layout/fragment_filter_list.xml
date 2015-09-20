@@ -28,94 +28,35 @@
                                                      android:padding="@dimen/view_spacing_large"
                                                      android:text="@string/filter_prompt"/>
         <LinearLayout
-                android:id="@+id/integration_twitter_filter_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-            <RelativeLayout android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingRight="@dimen/view_spacing_large"
-                            android:paddingLeft="@dimen/view_spacing_large">
-                <TextView android:id="@+id/integration_twitter"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="@string/twitter"
-                          android:gravity="center"
-                          android:drawablePadding="@dimen/view_spacing_large"
-                          android:textColor="@android:color/black"
-                          android:drawableStart="@drawable/ic_twitter_blue_36dp"
-                          android:drawableLeft="@drawable/ic_twitter_blue_36dp"/>
-                <android.support.v7.widget.SwitchCompat
-                        android:id="@+id/integration_twitter_filter_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/twitter"
-                        android:textColor="@android:color/black"
-                        android:layout_gravity="right"
-                        android:drawableStart="@drawable/ic_twitter_blue_36dp"
-                        android:drawableLeft="@drawable/ic_twitter_blue_36dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
-            <org.addhen.smssync.presentation.view.ui.widget.FilterKeywords
-                    android:id="@+id/integration_twitter_keyword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="73dp"
-                    app:keywordIcon="@drawable/ic_format_color_text_grey_900_24dp"
-                    app:keywordText="@string/keywords"
-                    android:orientation="vertical"/>
-        </LinearLayout>
-        <LinearLayout
                 android:id="@+id/custom_integration_filter_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-            <org.addhen.smssync.presentation.view.ui.widget.CustomFilterKeywords
-                    android:id="@+id/twitter_filter_keywords"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
-
-            <org.addhen.smssync.presentation.view.ui.widget.CustomFilterKeywords
-                    android:id="@+id/custom_filter_keywords"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
-        </LinearLayout>
+                android:orientation="vertical"/>
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/view_spacing_large"
                 android:layout_marginBottom="@dimen/view_spacing_large"
                 android:background="@android:color/darker_gray"/>
-        <RadioGroup android:id="@+id/login_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:tag="Reset"
-                    android:paddingLeft="@dimen/view_spacing_large"
-                    android:paddingStart="@dimen/view_spacing_large"
-                    android:layout_marginTop="@dimen/view_spacing_normal">
-            <RadioButton android:id="@+id/radio_btn_apply_unique_filters"
-                         android:text="@string/apply_unique_filters"
-                         android:paddingLeft="@dimen/view_spacing_normal"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"/>
-            <RadioButton android:id="@+id/radio_btn_apply_filters_to_all"
-                         android:text="@string/apply_filters_to_all"
-                         android:paddingLeft="@dimen/view_spacing_normal"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"/>
-            <LinearLayout android:id="@+id/global_filters_container"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:layout_marginLeft="42dp"
-                          android:orientation="vertical">
-                <include layout="@layout/include_filters_layout"/>
-            </LinearLayout>
-        </RadioGroup>
+
+        <org.addhen.smssync.presentation.view.ui.widget.FilterKeywordsView
+                android:id="@+id/white_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:filterTitleText="@string/whitelist"
+                app:filterTitleIcon="@drawable/ic_call_grey_900_24dp"
+                app:filterKeywordIcon="@drawable/ic_phone_in_talk_grey_900_24dp"
+                app:filterKeywordText="@string/phone_numbers"
+                android:orientation="vertical"/>
+
+        <org.addhen.smssync.presentation.view.ui.widget.FilterKeywordsView
+                android:id="@+id/black_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:filterTitleText="@string/blacklist"
+                app:filterTitleIcon="@drawable/ic_call_grey_900_24dp"
+                app:filterKeywordIcon="@drawable/ic_phone_locked_grey_900_24dp"
+                app:filterKeywordText="@string/phone_numbers"
+                android:orientation="vertical"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

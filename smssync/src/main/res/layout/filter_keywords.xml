@@ -22,7 +22,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
             android:id="@+id/filter_keyword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:drawableStart="@drawable/ic_format_color_text_grey_900_24dp"
             android:drawableLeft="@drawable/ic_format_color_text_grey_900_24dp"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
             android:id="@+id/filter_keyword_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

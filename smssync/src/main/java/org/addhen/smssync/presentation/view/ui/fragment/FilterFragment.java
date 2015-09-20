@@ -29,17 +29,16 @@ import org.addhen.smssync.presentation.util.Utility;
 import org.addhen.smssync.presentation.view.filters.ListFilterView;
 import org.addhen.smssync.presentation.view.ui.activity.MainActivity;
 import org.addhen.smssync.presentation.view.ui.adapter.FilterAdapter;
-import org.addhen.smssync.presentation.view.ui.widget.CustomFilterKeywords;
-import org.addhen.smssync.presentation.view.ui.widget.FilterKeywords;
+import org.addhen.smssync.presentation.view.ui.widget.FilterKeywordsView;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -67,7 +66,7 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
 
     private FilterAdapter mFilterAdapter;
 
-    @Bind(R.id.keyword_filters_container)
+    @Bind(R.id.custom_integration_filter_container)
     LinearLayout mFilterViewGroup;
 
     public FilterFragment() {
@@ -145,63 +144,84 @@ public class FilterFragment extends BaseRecyclerViewFragment<FilterModel, Filter
     private void initTwitterView() {
         if ((mTwitterClient != null) && (mTwitterClient.getSessionManager().getActiveSession()
                 != null)) {
-            CustomFilterKeywords twitterFilterKeyWords = new CustomFilterKeywords(getAppContext());
-            final FilterKeywords filterKeywords = twitterFilterKeyWords.getFilterKeywords();
-            filterKeywords.getFilterKeyword().setText(R.string.keywords);
+            //// TODO: Move this into a reusable function
+            FilterKeywordsView filterKeywordsView = new FilterKeywordsView(
+                    getAppContext());
 
-            final SwitchCompat twitterSwitch = twitterFilterKeyWords.getSwitchCompat();
-            twitterSwitch.setOnClickListener(v -> {
-                if (twitterSwitch.isChecked()) {
-                    filterKeywords.setVisibility(View.GONE);
+            final SwitchCompat filterKeywordsSwitch = filterKeywordsView
+                    .getSwitchCompat();
+            filterKeywordsView.setSwitchListener(v -> {
+                if (filterKeywordsSwitch.isChecked()) {
+                    // TODO: Enable filter
                 } else {
-                    filterKeywords.setVisibility(View.VISIBLE);
+                    // TODO: Disable filter
                 }
             });
 
-            final TextView title = twitterFilterKeyWords.getTitle();
+            final AppCompatTextView title = filterKeywordsView.getTitle();
             title.setText(R.string.twitter);
-
-            final Drawable twitterDrawable = ContextCompat.getDrawable(getContext(),
+            final Drawable customWebServiceDrawable = ContextCompat.getDrawable(getContext(),
                     R.drawable.ic_twitter_blue_24dp);
-            title.setCompoundDrawablesWithIntrinsicBounds(twitterDrawable, null, null, null);
+            title.setCompoundDrawablesWithIntrinsicBounds(customWebServiceDrawable, null, null,
+                    null);
+            AppCompatTextView filterKeywordCount = filterKeywordsView
+                    .getFilterKeywordCount();
+            filterKeywordCount.setText(0);
+            filterKeywordCount.setOnClickListener(v -> {
+                // TODO: Launch activity for managing filters
+            });
 
-            mFilterViewGroup.addView(twitterFilterKeyWords);
+            AppCompatTextView filterKeyword = filterKeywordsView.getFilterKeyword();
+            filterKeyword.setText(R.string.keywords);
+            filterKeyword.setOnClickListener(v -> {
+                // TODO: Launch activity for managing filters
+            });
+
+            mFilterViewGroup.addView(filterKeywordsView);
         }
     }
 
     private void initCustomIntegrations(List<WebServiceModel> webServiceModels) {
         if (!Utility.isEmpty(webServiceModels)) {
             for (WebServiceModel webServiceModel : webServiceModels) {
-                initCustomWebServiceView(webServiceModel);
+                initCustomWebServiceView(webServiceModel.getTitle(),
+                        R.drawable.ic_web_grey_900_24dp);
             }
         }
     }
 
-    private void initCustomWebServiceView(WebServiceModel webServiceModel) {
-        CustomFilterKeywords customWebServiceFilterKeyWords = new CustomFilterKeywords(
+    private void initCustomWebServiceView(String integrationTitle,
+            @DrawableRes int integrationDrawableResId) {
+        FilterKeywordsView filterKeywordsView = new FilterKeywordsView(
                 getAppContext());
-        final FilterKeywords filterKeywords = customWebServiceFilterKeyWords.getFilterKeywords();
-        filterKeywords.getFilterKeyword().setText(R.string.keywords);
-        filterKeywords.getFilterKeywordCount().setText(0);
-        filterKeywords.setOnClickListener(v -> {
-            // TODO: Launch activity for managing filters
-        });
 
-        final SwitchCompat customWebServiceSwitch = customWebServiceFilterKeyWords
+        final SwitchCompat filterKeywordsSwitch = filterKeywordsView
                 .getSwitchCompat();
-        customWebServiceSwitch.setOnClickListener(v -> {
-            if (customWebServiceSwitch.isChecked()) {
-                filterKeywords.setVisibility(View.GONE);
+        filterKeywordsView.setSwitchListener(v -> {
+            if (filterKeywordsSwitch.isChecked()) {
+                // TODO: Enable filter 
             } else {
-                filterKeywords.setVisibility(View.VISIBLE);
+                // TODO: Disable filter
             }
         });
 
-        final TextView title = customWebServiceFilterKeyWords.getTitle();
-        title.setText(webServiceModel.getTitle());
-        final Drawable customWebServiceDrawable = ContextCompat.getDrawable(getContext(),
-                R.drawable.ic_web_grey_900_24dp);
+        final AppCompatTextView title = filterKeywordsView.getTitle();
+        title.setText(integrationTitle);
+        final Drawable customWebServiceDrawable = ContextCompat.getDrawable(
+                getContext(), integrationDrawableResId);
         title.setCompoundDrawablesWithIntrinsicBounds(customWebServiceDrawable, null, null, null);
-        mFilterViewGroup.addView(customWebServiceFilterKeyWords);
+        AppCompatTextView filterKeywordCount = filterKeywordsView
+                .getFilterKeywordCount();
+        filterKeywordCount.setText(0);
+        filterKeywordCount.setOnClickListener(v -> {
+            // TODO: Launch activity for managing filters
+        });
+
+        AppCompatTextView filterKeyword = filterKeywordsView.getFilterKeyword();
+        filterKeyword.setText(R.string.keywords);
+        filterKeyword.setOnClickListener(v -> {
+            // TODO: Launch activity for managing filters
+        });
+        mFilterViewGroup.addView(filterKeywordsView);
     }
 }
