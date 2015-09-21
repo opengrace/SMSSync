@@ -37,6 +37,8 @@ public class WebServiceModel extends Model implements Parcelable {
 
     private Status mStatus;
 
+    private String mKeywords;
+
     public WebServiceModel() {
     }
 
@@ -80,6 +82,14 @@ public class WebServiceModel extends Model implements Parcelable {
         mStatus = status;
     }
 
+    public void setKeywords(String keywords) {
+        mKeywords = keywords;
+    }
+
+    public String getKeywords() {
+        return mKeywords;
+    }
+
     @Override
     public String toString() {
         return "SyncUrl{" +
@@ -88,6 +98,7 @@ public class WebServiceModel extends Model implements Parcelable {
                 ", url='" + mUrl + '\'' +
                 ", secret='" + mSecret + '\'' +
                 ", syncScheme=" + mSyncScheme +
+                ", keywords=" + mKeywords +
                 ", status=" + mStatus +
                 '}';
     }

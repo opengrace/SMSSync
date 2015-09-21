@@ -34,6 +34,8 @@ public class WebServiceEntity extends Entity {
 
     private Status status;
 
+    private String keywords;
+
     public String getTitle() {
         return title;
     }
@@ -56,6 +58,14 @@ public class WebServiceEntity extends Entity {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public SyncSchemeEntity getSyncScheme() {
@@ -82,6 +92,7 @@ public class WebServiceEntity extends Entity {
                 ", url='" + url + '\'' +
                 ", secret='" + secret + '\'' +
                 ", syncScheme=" + syncScheme +
+                ", keyword=" + keywords +
                 ", status=" + status +
                 '}';
     }

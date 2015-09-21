@@ -45,6 +45,7 @@ public class WebServiceDataMapper {
             webServiceEntity.setSecret(webService.getSecret());
             webServiceEntity.setTitle(webService.getTitle());
             webServiceEntity.setUrl(webService.getUrl());
+            webServiceEntity.setKeywords(webService.getKeywords());
             webServiceEntity
                     .setStatus(WebServiceEntity.Status.valueOf(webService.getStatus().name()));
             webServiceEntity
@@ -61,6 +62,7 @@ public class WebServiceDataMapper {
             webService.setSecret(webServiceEntity.getSecret());
             webService.setTitle(webServiceEntity.getTitle());
             webService.setUrl(webServiceEntity.getUrl());
+            webService.setKeywords(webServiceEntity.getKeywords());
             webService.setStatus(WebService.Status.valueOf(webServiceEntity.getStatus().name()));
             webService
                     .setSyncScheme(new SyncScheme(webServiceEntity.getSyncScheme().toJSONString()));

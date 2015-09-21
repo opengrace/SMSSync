@@ -34,6 +34,8 @@ public class WebService extends DataEntity {
 
     private Status status;
 
+    private String keywords;
+
     public String getTitle() {
         return title;
     }
@@ -74,6 +76,14 @@ public class WebService extends DataEntity {
         this.status = status;
     }
 
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
+
     @Override
     public String toString() {
         return "SyncUrl{" +
@@ -82,6 +92,7 @@ public class WebService extends DataEntity {
                 ", url='" + url + '\'' +
                 ", secret='" + secret + '\'' +
                 ", syncScheme=" + syncScheme +
+                ", keyword=" + keywords +
                 ", status=" + status +
                 '}';
     }
