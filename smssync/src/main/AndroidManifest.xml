@@ -129,7 +129,7 @@
                     android:value=".presentation.view.ui.activity.MainActivity"/>
         </activity>
         <activity
-                android:name=".presentation.view.ui.activity.AddKeywordActivity"
+                android:name=".presentation.view.ui.activity.AddKeywordsActivity"
                 android:label="@string/add_keyword"
                 android:exported="false"
                 android:launchMode="singleTask"

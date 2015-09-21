@@ -20,7 +20,7 @@ package org.addhen.smssync.presentation.view.ui.navigation;
 import org.addhen.smssync.presentation.model.WebServiceModel;
 import org.addhen.smssync.presentation.view.ui.activity.AddPhoneNumberActivity;
 import org.addhen.smssync.presentation.view.ui.activity.AddWebServiceActivity;
-import org.addhen.smssync.presentation.view.ui.activity.AddKeywordActivity;
+import org.addhen.smssync.presentation.view.ui.activity.AddKeywordsActivity;
 import org.addhen.smssync.presentation.view.ui.activity.GettingStartedActivity;
 import org.addhen.smssync.presentation.view.ui.activity.IntegrationActivity;
 import org.addhen.smssync.presentation.view.ui.activity.ListWebServiceActivity;
@@ -117,6 +117,6 @@ public class Launcher {
      * Launches activity for adding a new keyword
      */
     public void launchAddKeyword() {
-        mActivity.startActivity(AddKeywordActivity.getIntent(mActivity));
+        mActivity.startActivity(AddKeywordsActivity.getIntent(mActivity));
     }
 }
